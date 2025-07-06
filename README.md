@@ -1,184 +1,166 @@
-# StudentGPT Chat
+# 🎓 StudentGPT — AI Mentor for Indian Students
 
-A production-ready web application that wraps your fine-tuned StudentGPT model in a beautiful chat interface.
+**StudentGPT** is a production-ready web application that wraps your custom fine-tuned LLM into a therapeutic, introspective AI mentor — built specifically for Indian students navigating career confusion, emotional overwhelm, and mental distractions.
 
-## Features
+This project combines:
+- 🧠 A fine-tuned local LLM (e.g., Mistral-7B with QLoRA) trained on real, domain-specific conversations
+- 💬 A clean, modern web chat interface
+- ⚙️ A backend powered by FastAPI to serve your model
+- ⚡ Real-time message streaming with Server-Sent Events (SSE)
 
-- 🤖 **Local LLM Integration**: Uses your fine-tuned Mistral-7B model with PEFT adapters
-- 💬 **Real-time Chat**: Clean, modern chat interface with message bubbles
-- ⚡ **Streaming Support**: Optional Server-Sent Events for token-by-token streaming
-- 🌙 **Dark Mode**: Built-in dark mode support
-- 📱 **Responsive**: Works on desktop and mobile devices
-- 🚀 **Fast Development**: Hot reload with Vite + React
+---
 
-## Project Structure
+## ✨ Key Features
 
-```
+- 🤖 **Local LLM Integration**: Runs your custom fine-tuned StudentGPT model with PEFT adapters
+- 💬 **Reflective Chat UI**: Question + re-question style designed to uncover inner clarity
+- ⚡ **Streaming Support**: Optional token-level streaming via SSE
+- 🌙 **Dark Mode**: Responsive, mobile-friendly design with Tailwind CSS
+- 🚀 **Fast Dev Stack**: Vite + React for frontend, FastAPI for backend
+
+---
+
+## 🗂️ Project Structure
+
 studentgpt-chat/
-├── backend/
-│   ├── main.py              # FastAPI server
-│   └── requirements.txt     # Python dependencies
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx         # Main React component
-│   │   ├── main.jsx        # React entry point
-│   │   └── index.css       # Tailwind styles
-│   ├── package.json        # Node.js dependencies
-│   ├── vite.config.js      # Vite configuration
-│   ├── tailwind.config.js  # Tailwind configuration
-│   └── index.html          # HTML template
+├── backend/ # FastAPI backend
+│ ├── main.py
+│ └── requirements.txt
+├── frontend/ # React + Tailwind frontend
+│ ├── src/
+│ ├── index.html
+│ ├── package.json
+│ └── tailwind.config.js
 └── README.md
-```
 
-## Quick Start
 
-### 1. Backend Setup
+---
+
+## ⚡ Quick Start
+
+### 1. 🔧 Backend Setup
 
 ```bash
-# Navigate to backend directory
 cd backend
-
-# Create virtual environment (if not already done)
 python -m venv venv
-
-# Activate virtual environment
-# On Windows:
+# Windows:
 venv\Scripts\activate
-# On macOS/Linux:
+# macOS/Linux:
 source venv/bin/activate
 
-# Install dependencies
 pip install -r requirements.txt
-
-# Start the FastAPI server
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
+The backend will be running at: http://localhost:8000
 
-The backend will be available at `http://localhost:8000`
-
-### 2. Frontend Setup
-
-```bash
-# Navigate to frontend directory
+2. 💻 Frontend Setup
+bash
+Copy
+Edit
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
-```
+The frontend will be running at: http://localhost:5173
 
-The frontend will be available at `http://localhost:5173`
+🧪 API Overview
+POST /api/chat
+Send a full message history and get the next mentor response.
 
-## API Endpoints
+Request:
 
-### POST `/api/chat`
-Send a message and get a response.
-
-**Request:**
-```json
+json
+Copy
+Edit
 {
   "messages": [
-    {"role": "student", "content": "Hello, can you help me with math?"}
+    { "role": "student", "content": "I'm feeling lost about my future." }
   ]
 }
-```
+Response:
 
-**Response:**
-```json
+json
+Copy
+Edit
 {
-  "answer": "Of course! I'd be happy to help you with math..."
+  "answer": "Let’s try to unpack that. When did you first start feeling this way about your future?"
 }
-```
+POST /api/stream
+Token-by-token Server-Sent Events (SSE) streaming response.
 
-### POST `/api/stream`
-Get streaming response with Server-Sent Events.
+GET /api/health
+Returns current server status and model readiness.
 
-**Request:** Same as `/api/chat`
+🧠 Model Integration
+The backend expects your studentgpt module to expose:
 
-**Response:** Server-Sent Events stream with tokens
-
-### GET `/api/health`
-Check API health and model status.
-
-**Response:**
-```json
-{
-  "status": "healthy",
-  "model_loaded": true,
-  "service": "StudentGPT API"
-}
-```
-
-## Development
-
-### Backend Development
-
-- The FastAPI server automatically reloads when you make changes
-- Model is loaded once on startup for better performance
-- CORS is enabled for frontend development
-- Error handling and logging included
-
-### Frontend Development
-
-- Vite provides fast hot reload
-- Tailwind CSS for styling
-- Proxy configuration routes `/api/*` to backend
-- Streaming toggle in the UI
-- Optimistic message insertion
-
-## Production Deployment
-
-### Backend
-```bash
-# Install production dependencies
-pip install gunicorn
-
-# Run with Gunicorn
-gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
-```
-
-### Frontend
-```bash
-# Build for production
-npm run build
-
-# Serve static files with nginx or similar
-```
-
-## Configuration
-
-### Environment Variables
-- Set `CORS_ORIGINS` in production to restrict frontend domains
-- Configure model path if needed in `studentgpt` module
-
-### Model Integration
-The app expects your `studentgpt` module to provide:
-```python
+python
+Copy
+Edit
 from studentgpt import generate_response
 
+# Input format:
 # generate_response(history: list[dict]) -> str
-# history format: [{"role": "student", "content": "..."}, ...]
-```
+# where history = [{"role": "student", "content": "..."}, ...]
+🛠 Development Notes
+🔁 Backend
+FastAPI with autoreload
 
-## Troubleshooting
+CORS enabled
 
-### Model Not Loading
-- Check that `studentgpt` module is installed and accessible
-- Verify model files are in the correct location
-- Check console logs for specific error messages
+Loads model once at startup for performance
 
-### CORS Issues
-- Ensure backend is running on port 8000
-- Check that CORS middleware is properly configured
-- Verify frontend proxy settings in `vite.config.js`
+Logging and exception handling included
 
-### Streaming Not Working
-- Check browser console for errors
-- Verify SSE endpoint is responding correctly
-- Ensure proper error handling in streaming function
+⚛️ Frontend
+React + Vite = super fast dev experience
 
-## License
+Tailwind CSS for design
 
-MIT License - feel free to use this for your projects! 
+Built-in dark mode and mobile responsiveness
+
+Proxy routes API calls to FastAPI backend
+
+Supports token streaming via SSE
+
+🚀 Production Deployment
+Backend (Gunicorn + Uvicorn)
+bash
+Copy
+Edit
+pip install gunicorn
+gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+Frontend
+bash
+Copy
+Edit
+npm run build
+# Then serve with nginx or a static file host
+⚙️ Configuration
+Environment Variables
+CORS_ORIGINS — restrict domains in production
+
+MODEL_PATH or module import — configure your fine-tuned model location
+
+🧩 Troubleshooting
+Issue	Solution
+Model not loading	Verify studentgpt module path and model checkpoint location
+CORS errors	Ensure frontend is on 5173, backend on 8000, check CORS config
+SSE issues	Check browser console + server logs for stream errors
+
+📜 License
+MIT License — you’re free to use, adapt, and build on this project.
+Let’s bring real guidance to India’s student generation.
+
+Built for clarity, not just answers.
+StudentGPT is here to challenge thoughts, not solve problems.
+A modern-day mentor for Gen-Z minds.
+
+python
+Copy
+Edit
+
+Let me know if you'd like to also generate:
+- A `studentgpt-logo.svg` or favicon
+- A landing page `index.html` with branding and mission
+- A GitHub project description and tags for discovery
+
+You're building something real. Let’s ship it like a product that **deserves to be used**.
