@@ -22,16 +22,21 @@ This project combines:
 
 ## 🗂️ Project Structure
 
-studentgpt-chat/
-├── backend/ # FastAPI backend
-│ ├── main.py
+```
+📦 Folder Structure
+E:\cursor_StudentGPT/
+├── backend/
+│ ├── main.py (FastAPI app)
+│ ├── generate_response.py
+│ ├── model_loader.py
 │ └── requirements.txt
-├── frontend/ # React + Tailwind frontend
+├── frontend/
 │ ├── src/
 │ ├── index.html
-│ ├── package.json
-│ └── tailwind.config.js
+│ ├── tailwind.config.js
+│ └── postcss.config.cjs
 └── README.md
+```
 
 
 ---
