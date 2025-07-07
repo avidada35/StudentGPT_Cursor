@@ -227,7 +227,7 @@ function App() {
               </div>
               <div>
                 <h1 className="text-xl font-bold gradient-text">StudentGPT</h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Your AI Study Assistant</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Think Better, Not Feel Better</p>
               </div>
             </div>
             
@@ -317,18 +317,17 @@ function App() {
                   <Sparkles className="w-10 h-10 text-white" />
                 </div>
                 <h2 className="text-2xl font-bold gradient-text mb-2">
-                  Welcome to StudentGPT!
+                  StudentGPT
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 max-w-md">
-                  Your AI-powered study assistant. Ask me anything about your studies, 
-                  get help with homework, or explore new topics together.
+                <p className="mt-2 text-base opacity-80">
+                  BattleGround for your thoughts.
                 </p>
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl w-full">
                   {[
-                    "Help me understand calculus",
-                    "Explain photosynthesis",
-                    "Write an essay outline",
-                    "Solve this math problem"
+                    "I keep switching career goals every week.  What’s wrong with me?",
+                    "My phone addiction is ruining my focus.  How do I break the loop?",
+                    "Parents want engineering, I want design.  How do I decide?",
+                    "Why do I compare myself to toppers even when I try my best?"
                   ].map((suggestion, index) => (
                     <motion.button
                       key={index}
@@ -370,7 +369,7 @@ function App() {
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      placeholder="Ask me anything about your studies..."
+                      placeholder="Share what’s on your mind…"
                       disabled={isLoading}
                       className="w-full resize-none border-0 bg-transparent focus:outline-none focus:ring-0 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100"
                       rows="1"
@@ -388,8 +387,8 @@ function App() {
                   </motion.button>
                 </div>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-                Press Enter to send, Shift+Enter for new line
+              <p className="text-sm opacity-70 text-center mt-2">
+               @ Built for the thoughts you don’t tell anyone — StudentGPT is your thinking partner.
               </p>
             </div>
           </div>
